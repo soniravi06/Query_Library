@@ -1,5 +1,4 @@
---Sophos Endpoint Health Status Check EDR Query
-
+/* EDR Query to check Sophos Endpoint Health Status */
 SELECT
   (SELECT
     CASE
