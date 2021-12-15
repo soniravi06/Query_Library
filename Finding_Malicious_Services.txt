@@ -1,0 +1,58 @@
+-- Working Query_v1.0
+-- DECLARE VARIABLE
+-- NAME: URL  TYPE: STRING
+-- URL LINK: https://raw.githubusercontent.com/SophosRapidResponse/OSQuery/main/Testing/test.csv
+
+-------------------------------------------------------------------------------------------------
+
+
+WITH
+     Remote_CSV_file(Line, str) AS (
+          SELECT '', (SELECT result from curl where url = '$$URL$$') ||char(10)
+          UNION ALL
+          SELECT substr(str, 0, instr(str, char(10) )), substr(str, instr(str, char(10) )+1) FROM Remote_CSV_file WHERE str!=''
+      ),
+      -- Create Table for Remote_CSV_file
+      Remote_Loaded_Table (Col1) AS (
+          SELECT SPLIT(Line,',',0) Col1
+          FROM Remote_CSV_file WHERE Line != ''
+      ),
+      Path_List_info AS (
+   SELECT
+   strftime('%Y-%m-%dT%H:%M:%SZ',swe.datetime) AS Datetime,
+   swe.eventid AS Event_ID,
+   JSON_EXTRACT(swe.data, '$.EventData.AccountName') AS Account_Name,
+   rlt.Col1 AS Matching_Services,
+   JSON_EXTRACT(swe.data, '$.EventData.ServiceName') AS Service_Name,
+   JSON_EXTRACT(swe.data, '$.EventData.ImagePath') AS Image_Path,
+   swe.user_id AS SID,
+   u.username AS Username,
+   u.directory AS Directory,
+   JSON_EXTRACT(swe.data, '$.EventData.ServiceType') AS Service_Type,
+   JSON_EXTRACT(swe.data, '$.EventData.StartType') AS Start_Type,
+   'System.evtx' AS Data_Source,
+   'Services.02.0' AS Query
+FROM sophos_windows_events swe
+JOIN users u ON swe.user_id = u.uuid
+JOIN Remote_Loaded_Table rlt ON Image_Path LIKE rlt.Col1
+WHERE swe.source = 'System' AND swe.eventid = 7045
+)
+
+SELECT
+  DateTime,
+  Event_ID,
+  Account_Name,
+  Matching_Services,
+  Service_Name,
+  Image_path,
+  SID,
+  username,
+  Directory,
+  Service_Type,
+  Start_Type,
+  CAST ( (WITH RECURSIVE Counter(x) AS ( VALUES ( ( 1 ) ) UNION ALL SELECT x+1 FROM Counter WHERE x < length(Image_path) )
+                SELECT GROUP_CONCAT(substr(Image_path, x, 1),CHAR(8729) ) FROM counter)
+  AS TEXT) Safe_Image_path,
+  Data_source,
+  Query
+FROM Path_List_info
