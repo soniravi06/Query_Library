@@ -1,0 +1,89 @@
+{
+  "main": {
+    "id": "3164d2683b4634af",
+    "type": "split",
+    "children": [
+      {
+        "id": "b912bfe5122410e7",
+        "type": "leaf",
+        "state": {
+          "type": "empty",
+          "state": {}
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "a4dbdf118acb1e07",
+    "type": "split",
+    "children": [
+      {
+        "id": "b76f3e4f7340905c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "86e4d84169adfac9",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "2ef6d845f289c8ac",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "040a120621715c65",
+    "type": "split",
+    "children": [
+      {
+        "id": "5c5e2932c7ec9584",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3d19012efd8529d8",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "b912bfe5122410e7",
+  "lastOpenFiles": [
+    "Total Bytes Data.md"
+  ]
+}
