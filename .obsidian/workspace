@@ -4,10 +4,10 @@
     "type": "split",
     "children": [
       {
-        "id": "b912bfe5122410e7",
+        "id": "ed4eeb90bda7e503",
         "type": "leaf",
         "state": {
-          "type": "empty",
+          "type": "graph",
           "state": {}
         }
       }
@@ -82,7 +82,7 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "b912bfe5122410e7",
+  "active": "ed4eeb90bda7e503",
   "lastOpenFiles": [
     "Total Bytes Data.md"
   ]
