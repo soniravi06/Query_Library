@@ -428,4 +428,4 @@ SELECT CAST('Device Name: '||ep_name AS VARCHAR) ATTRIBUTE, 'SUSPECT_MAL' VALUE,
 UNION ALL
 
 --DEVICE DATALAKE UPLOAD INFO
-SELECT CAST('Device Name: '||ep_name AS VARCHAR) ATTRIBUTE, 'Data_Latency_Hours: ' || Data_Latency_Hours VALUE, 'Days_of_data: '|| Days_of_data CONTEXT, 'Total_Size_MB: '|| Total_Size_MB CONTEXT_DATA, 'DataLake_Records: '|| CAST(DataLake_Records AS VARCHAR) NOTES FROM DATALAKE_UPLOAD WHERE ep_name LIKE '$$device_name$$' GROUP BY ep_name, Data_Latency_Hours, Days_of_data, Total_Size_MB, DataLake_Records
+SELECT CAST('Device Name: '||ep_name AS VARCHAR) ATTRIBUTE, 'DATALAKE_UPLOAD' || '' VALUE, 'Data_Latency_Hours: ' || Data_Latency_Hours||chr(10)||'Days_of_data: '|| Days_of_data CONTEXT, 'Total_Size_MB: '|| Total_Size_MB||chr(10)||'DataLake_Records: '|| CAST(DataLake_Records AS VARCHAR) CONTEXT_DATA, '' NOTES FROM DATALAKE_UPLOAD WHERE ep_name LIKE '$$device_name$$' GROUP BY ep_name, Data_Latency_Hours, Days_of_data, Total_Size_MB, DataLake_Records
