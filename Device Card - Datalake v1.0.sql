@@ -362,6 +362,21 @@ LIST_OF_ADMINS AS (
   AND uid = 500
   AND meta_hostname LIKE '$$device_name$$'
 
+),
+
+DATALAKE_UPLOAD AS (
+
+   SELECT
+      meta_hostname ep_name,
+      FORMAT('%,.2f',ROUND( ((to_unixtime(now())-to_unixtime(MAX(ingestion_timestamp)))/60/60),2)) Data_Latency_Hours,
+      FORMAT('%,.2f',ROUND( ((to_unixtime(MAX(ingestion_timestamp)) - to_unixtime(MIN(ingestion_timestamp)))/60/60/24), 2)) Days_of_data,
+      FORMAT('%,.2f',ROUND( (CAST( SUM(upload_size) AS DOUBLE)/1024/1024),3)) Total_Size_MB,
+      COUNT(meta_hostname) DataLake_Records
+   FROM
+      xdr_data
+   WHERE
+      meta_hostname LIKE '$$device_name$$'
+   GROUP BY meta_hostname
 )
 
 -- BLANK LINE BETWEEN EACH DEVICE
@@ -409,3 +424,8 @@ UNION ALL
 
 --SUSPECT MAL (LIMIT 5)
 SELECT CAST('Device Name: '||ep_name AS VARCHAR) ATTRIBUTE, 'SUSPECT_MAL' VALUE, 'PROCESS_NAME: '|| process_name ||chr(10)||'INSTANCES: '||CAST(instances AS VARCHAR) CONTEXT, 'ML_SCORE: '||CAST(ml_score AS VARCHAR)||chr(10)||'LAST_SEEN: '|| last_seen CONTEXT_DATA, 'USER_NAME: '||user_name NOTES FROM LIST_OF_MAL WHERE ep_name LIKE '$$device_name$$' AND ml_score > 30
+
+UNION ALL
+
+--DEVICE DATALAKE UPLOAD INFO
+SELECT CAST('Device Name: '||ep_name AS VARCHAR) ATTRIBUTE, 'Data_Latency_Hours: ' || Data_Latency_Hours VALUE, 'Days_of_data: '|| Days_of_data CONTEXT, 'Total_Size_MB: '|| Total_Size_MB CONTEXT_DATA, 'DataLake_Records: '|| CAST(DataLake_Records AS VARCHAR) NOTES FROM DATALAKE_UPLOAD WHERE ep_name LIKE '$$device_name$$' GROUP BY ep_name, Data_Latency_Hours, Days_of_data, Total_Size_MB, DataLake_Records
