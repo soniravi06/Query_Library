@@ -34,23 +34,6 @@ WHERE
     AND xdr_data.meta_hostname LIKE '$$device_name$$'
 ),
 
-win_programs AS (
-
-    SELECT
-        meta_hostname AS ep_name,
-        name,
-        version,
-        language,
-        install_source,
-        publisher,
-        identifying_number,
-        install_date
-    FROM xdr_data
-    WHERE query_name = 'windows_programs'
-    ORDER BY install_date DESC
-    LIMIT 3
-),
-
 PENDING_UPDATES AS (
 
   SELECT
