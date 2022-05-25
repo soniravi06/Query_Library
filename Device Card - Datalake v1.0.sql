@@ -1,6 +1,6 @@
 -- Device Card Query for Datalake
 -- VARIABLE   device_name   STRING    NOTE: Specify full Device Name in variable.
--- NOTE: This is a Single Device Card Query, Running this query for all or multiple devices will return complete/appropriate result. DO NOT USE WILDCARD in VARIABLE
+-- NOTE: This is a Single Device Card Query, Running this query for all or multiple devices will return incomplete/appropriate result. DO NOT USE WILDCARD in VARIABLE
 
 WITH latest_result AS (
     SELECT
