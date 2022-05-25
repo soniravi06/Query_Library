@@ -36,10 +36,6 @@ WHERE
 
 win_programs AS (
 
---SELECT * FROM encryption_details
-
---UNION ALL
-
     SELECT
         meta_hostname AS ep_name,
         name,
